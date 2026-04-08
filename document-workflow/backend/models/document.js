@@ -21,6 +21,10 @@ const Document = sequelize.define('Document', {
   workflow_stage_id: {
     type: DataTypes.INTEGER,
     defaultValue: 1 // Defaults to stage 1
+  },
+  rejection_reason: {
+    type: DataTypes.STRING,
+    allowNull: true // Only populated when status is Rejected
   }
 }, {
   tableName: 'documents'

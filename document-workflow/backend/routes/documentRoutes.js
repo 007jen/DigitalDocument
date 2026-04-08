@@ -101,24 +101,39 @@ router.get("/pending", async (req, res) => {
   }
 });
 
-// Manager: Approve/Reject document
+// Manager & Admin: Approve/Reject document (Includes Override capabilities)
 router.put("/review/:id", async (req, res) => {
   try {
-    const { status, manager_id } = req.body; // Approved or Rejected
+    const { status, manager_id, reason } = req.body; // Approved or Rejected, optional reason
     const docId = req.params.id;
 
     const doc = await Document.findByPk(docId);
     if (!doc) return res.status(404).json({ message: "Document not found" });
 
     doc.status = status;
+    
+    // Track rejection reason
+    if (status === "Rejected" && reason) {
+      doc.rejection_reason = reason;
+    } else if (status === "Approved") {
+      doc.rejection_reason = null; // Clear if an Admin overrides a prior rejection
+    }
+    
     await doc.save();
 
     // Create Audit Trail
+    let logMessage = `Document reviewed conceptually. Status changed to ${status}.`;
+    if (status === "Rejected" && reason) {
+      logMessage = `Document REJECTED. Reason: ${reason}`;
+    } else if (status === "Approved") {
+      logMessage = `Document APPROVED.`;
+    }
+
     await AuditLog.create({
       document_id: doc.id,
-      user_id: manager_id || 1, // Fallback if frontend isn't sending manager_id yet
+      user_id: manager_id || 1, 
       action: status,
-      details: `Document reviewed by Manager.`
+      details: logMessage
     });
 
     // Notify Employee

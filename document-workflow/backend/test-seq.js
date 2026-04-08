@@ -5,7 +5,7 @@ async function test() {
   try {
     const users = await User.findAll();
     console.log("Users:", users);
-  } catch(e) {
+  } catch (e) {
     console.error("Failed", e);
   }
   process.exit();

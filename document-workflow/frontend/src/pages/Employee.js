@@ -98,6 +98,7 @@ export default function Employee() {
                       <th>Title</th>
                       <th>File Name</th>
                       <th>Current Status</th>
+                      <th>Notes / Reason</th>
                       <th>Submitted On</th>
                     </tr>
                   </thead>
@@ -110,6 +111,13 @@ export default function Employee() {
                           <span className={`badge rounded-pill bg-${doc.status === 'Approved' ? 'success' : doc.status === 'Rejected' ? 'danger' : 'warning text-dark'} px-3 py-2`}>
                             {doc.status}
                           </span>
+                        </td>
+                        <td>
+                          {doc.status === 'Rejected' && doc.rejection_reason ? (
+                            <span className="text-danger small fw-bold">"{doc.rejection_reason}"</span>
+                          ) : (
+                            <span className="text-muted small">-</span>
+                          )}
                         </td>
                         <td className="text-muted small">
                           {new Date(doc.createdAt).toLocaleDateString()}
