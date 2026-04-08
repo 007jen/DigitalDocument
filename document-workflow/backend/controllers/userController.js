@@ -1,6 +1,6 @@
 // backend/controllers/userController.js
 
-const User = require('../models/user'); // Sequelize model
+const { User } = require('../models');  // Sequelize model from index
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();

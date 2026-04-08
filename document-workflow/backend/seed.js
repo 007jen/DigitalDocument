@@ -1,13 +1,12 @@
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
-const sequelize = require('./config/db');
-const User = require('./models/user');
+const { sequelize, User, WorkflowStage } = require('./models');
 
 async function seed() {
   try {
-    // 1. Create the Users table if it doesn't already exist
-    await sequelize.sync({ force: true }); // force true recreates the table to start fresh
-    console.log("✅ Users table created/reset!");
+    // 1. Recreate ALL tables (forces drop)
+    await sequelize.sync({ force: true });
+    console.log("✅ All tables created/reset!");
 
     // 2. Encrypt passwords
     const password = await bcrypt.hash('123456', 10);
@@ -18,8 +17,16 @@ async function seed() {
       { username: 'Manager User', email: 'manager@test.com', password: password, role: 'manager' },
       { username: 'Employee User', email: 'employee@test.com', password: password, role: 'employee' }
     ]);
-
     console.log("✅ Successfully created test users!");
+
+    // 4. Create default workflow stages
+    await WorkflowStage.bulkCreate([
+      { stage_level: 1, stage_name: "Manager Review", required_role: "manager" },
+      { stage_level: 2, stage_name: "Finance Review", required_role: "finance" },
+      { stage_level: 3, stage_name: "Final Admin Approval", required_role: "admin" }
+    ]);
+    console.log("✅ Successfully created Workflow Stages!");
+
     process.exit();
   } catch (error) {
     console.error("❌ Seeding failed:", error);

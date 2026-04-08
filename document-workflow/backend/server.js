@@ -9,6 +9,10 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+// Serve uploaded files securely
+const path = require("path");
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 require("dotenv").config();
 
 // MySQL Connection

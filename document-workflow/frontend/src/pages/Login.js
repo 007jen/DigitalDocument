@@ -29,37 +29,59 @@ export default function Login() {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="card p-4 shadow">
-        <h2 className="text-center mb-4">Login</h2>
+    <div className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
+      <div className="col-11 col-sm-8 col-md-6 col-lg-4">
+        <div className="glass-panel text-center floating-card">
+          <h2 className="mb-4">Welcome Back</h2>
+          <p className="text-muted mb-4 small">Select your role and login to continue</p>
 
-        <div className="d-flex justify-content-center mb-3">
-          <button className="btn btn-primary me-2" onClick={() => setRole("employee")}>Employee</button>
-          <button className="btn btn-success me-2" onClick={() => setRole("admin")}>Admin</button>
-          <button className="btn btn-warning" onClick={() => setRole("manager")}>Manager</button>
+          <div className="d-flex flex-column gap-2 mb-4">
+            <button 
+              className={`btn ${role === 'employee' ? 'btn-primary shadow flex-grow-1' : 'btn-light border'} fw-bold`} 
+              onClick={() => setRole("employee")}
+            >
+              Employee
+            </button>
+            <button 
+              className={`btn ${role === 'manager' ? 'btn-warning shadow flex-grow-1 text-dark' : 'btn-light border'} fw-bold`} 
+              onClick={() => setRole("manager")}
+            >
+              Manager
+            </button>
+            <button 
+              className={`btn ${role === 'admin' ? 'btn-success shadow flex-grow-1' : 'btn-light border'} fw-bold`} 
+              onClick={() => setRole("admin")}
+            >
+              Admin
+            </button>
+          </div>
+
+          <div className="text-start">
+            <label className="form-label text-muted small fw-bold mt-2">EMAIL ADDRESS</label>
+            <input
+              type="email"
+              className="form-control mb-3"
+              placeholder="name@company.com"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+
+            <label className="form-label text-muted small fw-bold">PASSWORD</label>
+            <input
+              type="password"
+              className="form-control mb-4"
+              placeholder="••••••••"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+
+          <button className="btn btn-dark w-100 py-2 fw-bold" onClick={login}>
+            Secure Login
+          </button>
+
+          <p className="mt-4 mb-0 text-muted small">
+            New to the system? <a href="/register" className="fw-bold text-primary text-decoration-none">Register here</a>
+          </p>
         </div>
-
-        <input
-          type="email"
-          className="form-control mb-3"
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-
-        <input
-          type="password"
-          className="form-control mb-3"
-          placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
-        <button className="btn btn-dark w-100" onClick={login}>
-          Login as {role}
-        </button>
-
-        <p className="mt-3 text-center">
-          Don't have an account? <a href="/register">Register here</a>
-        </p>
       </div>
     </div>
   );
