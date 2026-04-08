@@ -32,24 +32,24 @@ export default function Login() {
     <div className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
       <div className="col-11 col-sm-8 col-md-6 col-lg-4">
         <div className="glass-panel text-center floating-card">
-          <h2 className="mb-4">Welcome Back</h2>
+          {/* <h2 className="mb-4">Welcome Back</h2> */}
           <p className="text-muted mb-4 small">Select your role and login to continue</p>
 
           <div className="d-flex flex-column gap-2 mb-4">
-            <button 
-              className={`btn ${role === 'employee' ? 'btn-primary shadow flex-grow-1' : 'btn-light border'} fw-bold`} 
+            <button
+              className={`btn ${role === 'employee' ? 'btn-primary shadow flex-grow-1' : 'btn-light border'} fw-bold`}
               onClick={() => setRole("employee")}
             >
               Employee
             </button>
-            <button 
-              className={`btn ${role === 'manager' ? 'btn-warning shadow flex-grow-1 text-dark' : 'btn-light border'} fw-bold`} 
+            <button
+              className={`btn ${role === 'manager' ? 'btn-warning shadow flex-grow-1 text-dark' : 'btn-light border'} fw-bold`}
               onClick={() => setRole("manager")}
             >
               Manager
             </button>
-            <button 
-              className={`btn ${role === 'admin' ? 'btn-success shadow flex-grow-1' : 'btn-light border'} fw-bold`} 
+            <button
+              className={`btn ${role === 'admin' ? 'btn-success shadow flex-grow-1' : 'btn-light border'} fw-bold`}
               onClick={() => setRole("admin")}
             >
               Admin

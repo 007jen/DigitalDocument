@@ -11,7 +11,7 @@ export default function Manager() {
       setLoading(true);
       const res = await axios.get("http://localhost:5000/api/documents/pending");
       setPending(res.data);
-    } catch(e) {
+    } catch (e) {
       console.error(e);
     } finally {
       setLoading(false);
@@ -25,11 +25,11 @@ export default function Manager() {
   const reviewDoc = async (id, status) => {
     try {
       await axios.put(`http://localhost:5000/api/documents/review/${id}`, {
-        status, 
-        manager_id: managerId 
+        status,
+        manager_id: managerId
       });
       fetchPending();
-    } catch(e) {
+    } catch (e) {
       console.error(e);
       alert("Failed to review document");
     }
@@ -47,7 +47,7 @@ export default function Manager() {
           <div className="text-center p-5">Loading documents...</div>
         ) : pending.length === 0 ? (
           <div className="text-center text-muted p-5">
-            <h5>All Caught Up! 🎉</h5>
+            <h5>All Caught Up!</h5>
             <p>There are no pending documents waiting for your review.</p>
           </div>
         ) : (
@@ -64,19 +64,19 @@ export default function Manager() {
                       </div>
                       <div className="display-6 text-primary opacity-25">📄</div>
                     </div>
-                    
+
                     <div className="bg-light p-2 rounded mb-4 text-truncate small text-muted" title={doc.filename}>
                       📂 {doc.filename.substring(14)}
                     </div>
 
                     <div className="d-flex gap-2 mb-3">
-                      <button 
+                      <button
                         className="btn btn-success flex-grow-1 fw-bold shadow-sm"
                         onClick={() => reviewDoc(doc.id, "Approved")}
                       >
                         ✓ Approve
                       </button>
-                      <button 
+                      <button
                         className="btn btn-outline-danger flex-grow-1 fw-bold"
                         onClick={() => reviewDoc(doc.id, "Rejected")}
                       >
@@ -84,9 +84,9 @@ export default function Manager() {
                       </button>
                     </div>
 
-                    <a 
-                      href={`http://localhost:5000/uploads/${doc.filename}`} 
-                      target="_blank" 
+                    <a
+                      href={`http://localhost:5000/uploads/${doc.filename}`}
+                      target="_blank"
                       rel="noreferrer"
                       className="btn btn-sm btn-light w-100 border text-primary fw-bold"
                     >
